@@ -26,4 +26,15 @@ nestjs generate 를 이용하여 messages 모듈을 생성한다.
 
 ## 12. 파일 생성에 관한 더 자세한 설명
 
+이번에는 messages controller를 만들어본다.
+`nest generate controller messages/messages --flat`
+messages 폴더에 controller를 생성하는데 클래스 이름을 messages로 하겠다는 의미이다.
+`--flat`옵션은 messages에 하위 폴더로 controllers를 추가로 생성하지 않는 옵션이다.
+
 ## 13. 라우팅 논리 넣기
+
+messages.controller에 `Get, Post, Get('/:id)` 데코레이터로 라우팅 핸들러 메서드를 만들었다.
+
+## (선택)15. VSCode REST Client 익스텐션
+
+`rest client` 익스텐션을 설치하고, request.http 파일을 생성하여 요청 메서드를 작성하고 실행해보는 시간이었다.
