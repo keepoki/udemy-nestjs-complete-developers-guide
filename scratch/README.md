@@ -1,4 +1,6 @@
-# Section 02 - Nest 기초
+# Scratch
+
+- Section 02: Nest 기초
 
 ## 4. 프로젝트 설정
 

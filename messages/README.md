@@ -1,4 +1,6 @@
-# section 03
+# messages
+
+Section 03: Nest CLI로 프로젝트 생성하기 완료
 
 ## 10. 앱 셋업
 
