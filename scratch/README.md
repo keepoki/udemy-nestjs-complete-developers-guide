@@ -1,12 +1,16 @@
 # Scratch
 
-- Section 02: Nest 기초
+## 목차
 
-## 4. 프로젝트 설정
+- Section 02. Nest 기초
+
+## Section 02. Nest 기초
+
+### 4. 프로젝트 설정
 
 NestJs의 CLI를 통해 생성할 수 있지만, 이번 시간에는 직접 서버를 실행하기 위한 기본 과정으로 NestJs 의존 패키지를 설치한다.
 
-## 5. 타입스크립트 설정
+### 5. 타입스크립트 설정
 
 tsconfig.json 파일 생성 및 NestJs 데코레이션 사용을 위해 설정한다.
 
@@ -15,12 +19,12 @@ tsconfig.json 파일 생성 및 NestJs 데코레이션 사용을 위해 설정�
 "emitDecoratorMetadata": true,
 ```
 
-## 6. 컨트롤러 만들기
+### 6. 컨트롤러 만들기
 
 `@nestjs/common` 패키지의 데코레이터를 이용하여 컨트롤러를 만든다.
 컨트롤러가 라우트를 정의하는 것임을 알 수 있었다.
 
-## 7. Nest 앱 시작하기
+### 7. Nest 앱 시작하기
 
 모듈을 만들고, 모듈에 컨트롤러를 연결함
 서버 실행을 위해 `bootstrap` 비동기 함수를 만들고
