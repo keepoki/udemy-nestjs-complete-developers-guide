@@ -192,15 +192,165 @@ __decorate([
 
 ### 22. 서비스와 리포지토리
 
+컨트롤러 -> 서비스 -> 리포지토리
+
+서비스: 비즈니스 로직
+리포지토리: 스토리지 관련 로직
+
+흔히 서비스에 있는 메서드와 리포지토리에 있는 메서드와 똑같이 구성된다.
+그럼에도 서비스와 리포지토리로 역할을 분리해야 하는지 앞으로 실습을 통해 배울 수 있다고 한다.
+
+역할을 분리하면 저장소 교체나 변경에 대응하기 좋을 것 같다.
+
 ### 23. 리포지토리 구현하기
+
+`messages.repository.ts`, `messages.service.ts`, `messages.json` 파일을 생성하였다.
+
+`messages.repository.ts` 파일에서 클래스를 만들고 `findOne`, `findAll`, `create` 메서드 틀만 생성하였다.
+
+`messages.json` 파일을 데이터를 저장하는 공간으로 사용할 수 있도록 생성한다.
 
 ### 24. 스토리지 파일 읽고 쓰기
 
+데이터 구성을 파일 시스템을 통해 `messages.json` 파일을 읽고 객체로 변환하여 사용하였다.
+`create` 메서드에서는 id에 해당하는 속성에 객체 데이터를 추가하여, `messages.json` 파일로 쓰기 작업을 추가하였다.
+
+```ts
+  async findOne (id: string) {
+    const contents = await readFile('messages.json', 'utf-8');
+    const messages = JSON.parse(contents);
+
+    return messages[id];
+  }
+
+  async findAll() {
+    const contents = await readFile('messages.json', 'utf-8');
+    const messages = JSON.parse(contents);
+
+    return messages;
+  }
+
+  async create(content: string) {
+    const contents = await readFile('messages.json', 'utf-8');
+    const messages = JSON.parse(contents);
+
+    const id = Math.floor(Math.random() * 999);
+    messages[id] = { id, content };
+
+    await writeFile('messages.json', JSON.stringify(messages));
+  }
+```
+
 ### 25. 서비스 구현하기
+
+`MessagesService` 클래스 생성 하여 리포지토리 클래스를 생성자에서 직접적으로 의존성을 부여하고 똑같은 메서드를 적용하였다.
+지금 상태로는 서비스는 그냥 불필요한 단계를 거치는 느낌일 뿐이다. 하지만 따라가다보면 서비스의 역할을 알게된다고 한다.
+
+```ts
+import { MessagesRepository } from "./messages.repository";
+
+export class MessagesService {
+  messagesRepo: MessagesRepository;
+
+  constructor() {
+    // 서비스가 자체적인 의존성을 가지고 있습니다.
+    // 실제 앱에서 이렇게 하지 마십시오.
+    this.messagesRepo = new MessagesRepository();
+  }
+
+  findOne(id: string) {
+    return this.messagesRepo.findOne(id);
+  }
+
+  findAll() {
+    return this.messagesRepo.findAll();
+  }
+
+  create(content: string) {
+    return this.messagesRepo.create(content);
+  }
+}
+```
 
 ### 26. 컨트롤러 수동 테스트
 
+`messages.json` 파일에 빈 객체 추가하여, 의도한 코드가 작동하도록 한다.
+
+`messages.controller.ts` 컨트롤러에 서비스를 연결한다
+
+```ts
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateMessageDto } from './dtos/create-message.dto';
+import { MessagesService } from './messages.service';
+
+@Controller('messages')
+export class MessagesController {
+  messagesServices: MessagesService;
+
+  constructor() {
+    // 실제 앱에서 이렇게 하지 마세요.
+    // 의존성 주입을 사용하세요.
+    this.messagesServices = new MessagesService();
+  }
+
+  @Get()
+  listMessages() {
+    return this.messagesServices.findAll();
+  }
+
+  @Post()
+  createMessage(@Body() body: CreateMessageDto) {
+    return this.messagesServices.create(body.content);
+  }
+
+  @Get('/:id')
+  getMessage(@Param('id') id: string) {
+    return this.messagesServices.findOne(id);
+  }
+}
+```
+
+그리고 `request.http` 요청 테스트를 통해 데이터가 `messages.json` 파일에 잘 기록되고
+전체 및 id 조회도 잘 작동하는 것을 확인할 수 있다.
+
 ### 27. Nest에 내장된 예외 라이브러리로 오류 보고하기
+
+id에 해당하는 메시지를 찾을 때 현재는 데이터가 없더라도 정상적인 응답인 HTTP 상태 코드 200을 응답 하고있다. 찾는 데이터가 없을 때는 404 찾을 수 없음을 응답으로 바꾼다.
+
+`nestjs/common`의 `NotFoundException` 클래스를 사용하여 메시지가 없을 때에 대한 예외 처리를 컨트롤러에 작성하였다.
+이외에도 다양한 HTTP 상태 코드에 대한 클래스를 제공한다.
+
+```ts
+// messages.controller.ts
+{
+  ...
+  @Get('/:id')
+  async getMessage(@Param('id') id: string) {
+    const message = await this.messagesServices.findOne(id);
+
+    if (!message) {
+      throw new NotFoundException('message not found.');
+    }
+
+    return message;
+  }
+}
+```
+
+```http
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 69
+ETag: W/"45-z7TheIgAfnLt/M3BoT+vz5tmnZk"
+Date: Thu, 19 Jun 2025 14:55:19 GMT
+Connection: close
+{
+  "message": "message not found.",
+  "error": "Not Found",
+  "statusCode": 404
+}
+```
 
 ### 28. 제어 역전 자세히 알아보기
 
