@@ -136,7 +136,7 @@ export class CreateMessageDto {
  ```
 
 > DTO(Data Transfer Object) 데이터 전송 객체
-프로세스 간에 데이터를 전달하는 객체이다. 프로세스 간 통신이 일반적으로 원격 인터페이스(예: 웹 서비스)로 재정렬하면서 이루어지게 되는데 여기에서 각 호출의 비용이 많다는 점을 동기로 하여 이용하게 된다.각 호출의 비용이 큰 것이 클라이언트와 서버 간 왕복 시간과 관련되기 때문에 호출의 수를 줄이기 위해 여러 호출에 의해 전송되는 데이터를 축적하면서 오직 하나의 호출만으로 서비스되는 객체인 DTO를 사용하는 것이다.
+> 프로세스 간에 데이터를 전달하는 객체이다. 프로세스 간 통신이 일반적으로 원격 인터페이스(예: 웹 서비스)로 재정렬하면서 이루어지게 되는데 여기에서 각 호출의 비용이 많다는 점을 동기로 하여 이용하게 된다.각 호출의 비용이 큰 것이 클라이언트와 서버 간 왕복 시간과 관련되기 때문에 호출의 수를 줄이기 위해 여러 호출에 의해 전송되는 데이터를 축적하면서 오직 하나의 호출만으로 서비스되는 객체인 DTO를 사용하는 것이다.
 
 ### 20.검증 과정 심층 분석
 
@@ -354,8 +354,105 @@ Connection: close
 
 ### 28. 제어 역전 자세히 알아보기
 
+파이프 -> 메시지 컨트롤 -> 메시지 서비스 -> 메시지 리포지토리
+의존성으로 연결되어 있다.
+
+제어 역천 원칙에 의해
+클래스 안에서 클래스 자체적인 의존성 생성을 하지 말아야 한다. (원본 생성)
+생성자에서 매개변수로 의존성을 주입 받아야 한다. (사본 생성)
+더 나아가 서비스에서 리포지토리 인터페이스를 의존성을 주입 받는다.
+
+소스코드로 보면 다음과 같다.
+
+```ts
+// Bad, 클래스를 직접 생성하므로 강하게 결합되어 있고, 테스트가 교체가 어렵다.
+export class MessagesService {
+  messagesRepo: MessagesRepository;
+  constructor() {
+    this.messagesRepo = new MessagesRepository();
+  }
+}
+
+// Better, 제어 역전 적용, 생성자의 매개변수로 클래스 의존성 주입
+export class MessagesService {
+  messagesRepo: MessagesRepository;
+  constructor(repo: MessagesRepository) {
+    this.messagesRepo = repo;
+  }
+}
+
+// Best, 생성자의 매개변수로 인터페이스 의존성 주입
+interface Repository {
+  findOne(id: string);
+  findAll();
+  create(content: string);
+}
+export class MessagesService {
+  messagesRepo: Repository;
+  constructor(repo: Repository) {
+    this.messagesRepo = repo;
+  }
+}
+```
+
+> **제어 역전(Inversion of Control, IoC)**
+> 제어 역전이란 객체의 제어권을 외부로 위임하는 원칙입니다.
+> 전통적인 방식에서는 객체나 함수가 직접 필요한 의존성을 생성하고 제어합니다.
+> 반면, IoC에서는 이 제어권을 외부(프레임워크, 상위 객체 등)로 넘깁니다.
+> 일반 방식: “요리사가 식재료를 직접 시장에서 사고 요리”
+> IoC 방식: “누군가 식재료를 요리사에게 주고 요리만 하게 함”
+> 제어 역전 원칙으로 의존성을 외부에서 주입하게 되면, 의존성 교체가 쉬워지고, Mock 객체나 Stub으로 테스트가 가능하고, 기능 추가/변경 시 기존 코드 수정을 최소화할 수 있습니다.
+
 ### 29. 의존성 주입 소개
+
+NestJS의 의존성 주입 컨테이너는 객체를 생성하고 관리하며, 필요한 곳에 자동으로 주입해주는 기능을 수행한다.
+
+클래스와 의존성들 대한 리스트를 기록하는 곳과 인스턴스들을 생성하여 리스트에 기록하는 곳이 나누어져 있다.
+
+기본적으로 의존성 주입에서 사본을 생성하는 방법으로 `싱글톤 패턴`을 사용한다.
 
 ### 30. 의존성 주입을 이용하기 위한 리팩터링
 
+`Injectable` 데코레이터를 이용하여 의존성 클래스를 등록한다.
+
+```ts
+// Repository
+import { Injectable } from '@nestjs/common';
+@Injectable() // 의존성 클래스로 사용하겠다는 의미
+export class MessagesRepository { ... }
+
+// Services
+import { Injectable } from "@nestjs/common";
+@Injectable()
+export class MessagesService {
+  // MessagesRepository를 의존성 주입
+  constructor(public messagesRepo: MessagesRepository) {}
+  ...
+}
+```
+
+`module`에서 `providers`는 의존성 클래스들의 목록을 의미한다. 그리고 등록된 의존성들은 일반적으로 싱글톤 패턴에 의해 생성된다.(하나의 인스턴스만 생성된다)
+
+```ts
+// Module
+import { Module } from '@nestjs/common';
+import { MessagesController } from './messages.controller';
+import { MessagesService } from './messages.service';
+import { MessagesRepository } from './messages.repository';
+
+@Module({
+  controllers: [MessagesController],
+  providers: [MessagesService, MessagesRepository], // 의존성 클래스 등록
+})
+export class MessagesModule {}
+```
+
 ### 31. 의존성 주입에 관한 추가 참고사항
+
+NestJS에서는 이전 제어 역전에서 다룬 일반적인 의존성 주입을 사용하고 있다.
+
+Best에 소개된 인터페이스 의존성 주입하는 방식은 타입스크립트 특성에 따른 제약이 있어서 일반적으로 사용하지 않는다고 설명한다. 방법이 있지만 일반적이지 않아서 나중에 다룬다고 한다.
+
+의존성 주입을 하기 위한 행위들이 불필요하고 불편하게 느낄지 몰라도, 나중에 테스트할 떄 큰 도움이 될 것이라고 설명한다.
+
+---

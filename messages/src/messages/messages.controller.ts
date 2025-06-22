@@ -4,13 +4,7 @@ import { MessagesService } from './messages.service';
 
 @Controller('messages')
 export class MessagesController {
-  messagesServices: MessagesService;
-
-  constructor() {
-    // 실제 앱에서 이렇게 하지 마세요.
-    // 의존성 주입을 사용하세요.
-    this.messagesServices = new MessagesService();
-  }
+  constructor(public messagesServices: MessagesService) {}
 
   @Get()
   listMessages() {
