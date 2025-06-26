@@ -17,6 +17,18 @@
   - [48. 몇 가지 추가 경로](#48-몇-가지-추가-경로)
   - [49. 본문 검증 설정하기](#49-본문-검증-설정하기)
   - [50. 수동으로 경로 테스트하기](#50-수동으로-경로-테스트하기)
+- **Section 09. 사용자 데이터 생성 및 저장**
+  - [51. 사용자 생성과 저장](#51-사용자-생성과-저장)
+  - [52. 간단한 리뷰](#52-간단한-리뷰)
+  - [53. 생성과 저장에 관한 추가 내용](#53-생성과-저장에-관한-추가-내용)
+  - [54. find()와 findOne() 메서드에 필요한 업데이트](#54-find와-findone-메서드에-필요한-업데이트)
+  - [55. 데이터 쿼리](#55-데이터-쿼리)
+  - [56. 데이터 업데이트](#56-데이터-업데이트)
+  - [57. 사용자 삭제](#57-사용자-삭제)
+  - [58. 레코드 검색과 필터링](#58-레코드-검색과-필터링)
+  - [59. 레코드 삭제](#59-레코드-삭제)
+  - [60. 레코드 업데이트](#60-레코드-업데이트)
+  - [61. 예외에 관한 사항](#61-예외에-관한-사항)
 
 ## Section 07. 본격 프로젝트 시작
 
@@ -174,4 +186,104 @@ createUser, findUser, findAllUser, updateUser, removeUser
 
 ### 49. 본문 검증 설정하기
 
+이전 프로젝트와 마찬가지로 `class-validator`, `class-transformer` 패키지를 설치하였다.
+그리고 `create-user.dto.ts` dto를, `main.ts`에서 `ValidationPipe`를 구성하였다.
+
+```ts
+app.useGlobalPipes(
+  new ValidationPipe({
+    whitelist: true,
+  }),
+);
+```
+
 ### 50. 수동으로 경로 테스트하기
+
+`requests.http` 파일을 생성하여 아래와 같이 설정
+
+```http
+### Create a new user
+POST http://localhost:3000/auth/signup
+content-type: application/json
+
+{
+  "email": "asdf@asdf.com",
+  "password": "asdfasdf"
+}
+```
+
+메인에 `ValidationPipe`를 설정할 떄 `whitelist` 옵션의 역할은 예를들어 유저 dto에서 설정한 데이터 보다 많은 데이터가 `body`에 포함된 경우 이를 무시해주는 옵션이다.
+
+예를들어 요청 body JSON에 `admin: true` 같은 옵션을 추가하여, 원치않는 기능 작동으로 보안상 문제가 발생할 수 있으므로 방지해주는 것이다.
+
+---
+
+## Section 09. 사용자 데이터 생성 및 저장
+
+### 51. 사용자 생성과 저장
+
+`TypeORM`을 사용하여 리포지토리 의존성 주입을 하려면 아래와 같이 구성해야 한다.
+`Repository`는 리포지토리 타입을 명시해주는 것인데 제네릭 타입으로 `TypeORM`으로 만든 엔터티를 지정해주면 된다.
+제네릭 타입을 통해 의존성 주입을 위해서는 `InjectRepository` 데코레이터를 사용해야 한다.
+
+그리고 `create` 메서드를 정의한다. 이메일과 패스워드를 받아서 리포지토리에 생성하고 저장한다.
+
+그리고 실제적으로 요청을 받는 라우터 컨트롤러에 `createUser` 메서드를 정의한다.
+테스트 결과 DB에 잘 적용 된 것을 확인할 수 있다.
+
+```ts
+// users.service.ts
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { UserEntity } from './user.entity';
+import { InjectRepository } from '@nestjs/typeorm'; // 제네릭 타입의 의존성 주입
+
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(UserEntity) private repo: Repository<UserEntity>,
+  ) {}
+
+  create(email: string, password: string) {
+    const user = this.repo.create({ email, password });
+
+    return this.repo.save(user);
+  }
+}
+
+// users.service.ts
+import { Body, Controller, Post } from '@nestjs/common';
+import { CreateUserDto } from './dtos/create-user.dto';
+import { UsersService } from './users.service';
+
+@Controller('auth')
+export class UsersController {
+  constructor(private usersService: UsersService) {}
+
+  @Post('/signup')
+  createUser(@Body() body: CreateUserDto) {
+    this.usersService.create(body.email, body.password);
+  }
+}
+
+```
+
+### 52. 간단한 리뷰
+
+### 53. 생성과 저장에 관한 추가 내용
+
+### 54. find()와 findOne() 메서드에 필요한 업데이트
+
+### 55. 데이터 쿼리
+
+### 56. 데이터 업데이트
+
+### 57. 사용자 삭제
+
+### 58. 레코드 검색과 필터링
+
+### 59. 레코드 삭제
+
+### 60. 레코드 업데이트
+
+### 61. 예외에 관한 사항
