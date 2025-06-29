@@ -265,14 +265,76 @@ export class UsersController {
     this.usersService.create(body.email, body.password);
   }
 }
-
 ```
 
 ### 52. 간단한 리뷰
 
+```ts
+// users.service.ts
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectRepository(UserEntity) private repo: Repository<UserEntity>,
+  ) {}
+
+  create(email: string, password: string) {
+    const user = this.repo.create({ email, password });
+    return this.repo.save(user);
+  }
+}
+```
+
+`user.service.ts`에서 `create()`와 `save()`를 왜 각각 사용하는지 설명한다.
+`create()` 메서드는 새로운 엔터티 인스턴스를 생성하고 데이터를 설정하는 기능이다.
+`save()` 메서드는 실제로 엔터티를 가져와서 데이터베이스에 저장하는 기능을 한다.
+
+`save()` 메서드만 있으면 데이터를 저장할 수 있는데 `create()` 메서드를 사용하는 이유는 유효성 검사를 실행하려면 엔터티 인스턴스가 필요하기 때문이다.
+유효성 검사를 하고, 유효성 검사를 마친 데이터를 실제 데이터베이스에 저장하기 위함이다.
+
 ### 53. 생성과 저장에 관한 추가 내용
 
+후크는 특정 시점에 자동으로 호출되는 엔터티에 함수를 정의한다. `create` 메서드를 통해 엔터티 인스턴스가 생성되어야 후크도 작동한다.
+
+```ts
+import { Entity, PrimaryGeneratedColumn, Column, AfterInsert, AfterRemove, AfterUpdate } from 'typeorm';
+
+@Entity()
+export class UserEntity {
+  ...
+
+  @AfterInsert() // 후크 insert될 때 호출된다.
+  logInsert() {
+    console.log(`Inserted user with id ${this.id}`);
+  }
+
+  @AfterUpdate()
+  logUpdate() {
+    console.log(`Updated user with id ${this.id}`);
+  }
+
+  @AfterRemove()
+  logRemove() {
+    console.log(`Removed user with id ${this.id}`);
+  }
+}
+
+```
+
 ### 54. find()와 findOne() 메서드에 필요한 업데이트
+
+0.3.0 TypeORM 릴리스부터 `findBy()`를 더 이상 사용하지 않는다.
+
+따라서 `findOne()` 메서드를 찾아서 반환문을 다음과 같이 설정한다.
+
+```ts
+return this.repo.findOneBy({ id });
+```
+
+`find()` 메서드를 찾아서 리턴문을 다음과 같이 설정한다.
+
+```ts
+return this.repo.find({ where: { email } });
+```
 
 ### 55. 데이터 쿼리
 
