@@ -32,7 +32,7 @@ export class UsersService {
     return this.repo.save(user);
   }
 
-  remove() {
+  await remove() {
 
   }
 }

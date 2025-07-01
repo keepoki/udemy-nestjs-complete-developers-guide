@@ -349,9 +349,14 @@ return this.repo.find({ where: { email } });
 
 유저 서비스의 `update()` 메서드를 작성한다.
 
-레포지토리의 `save()` 메서드를 사용하는 것은 `insert()` 메서드와 `update()` 메서드를 합쳐놓은 기능과 같다. 중복된 데이터가 없으면 `insert()`할 것이고, 있으면 `update()` 한다.
+레포지토리의 `save()` 메서드를 사용하는 것은 `insert()` 메서드와 `update()` 메서드를 합쳐놓은 기능과 같다.
 
-그리고 `save()` 메서드를 사용하면 후크가 있지만, 나머지는 없다.
+새로운 엔티티 인스턴스를 전달하면 `INSERT` 쿼리가 실행되고, `@AfterInsert` 후크가 호출된다.
+기존 엔티티를 수정하여 전달하면 `UPDATE` 쿼리가 실행되고, `@AfterUpdate` 후크가 호출된다.
+
+차이점은 `insert()`와 `update()`는 직접적인 SQL `INSERT` 또는 `UPDATE` 쿼리를 실행하는 것과 같다. 그렇기 때문에 후크가 없다.
+
+또한 `save()` 메서드는 엔터티를 매개변수로 받는다. `save(Entity)`
 
 ### 57. 사용자 삭제
 
