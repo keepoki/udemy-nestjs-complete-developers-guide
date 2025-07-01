@@ -363,6 +363,9 @@ return this.repo.find({ where: { email } });
 
 ### 58. 레코드 검색과 필터링
 
+`user.services.ts` 파일에 버전 업데이트로 사용법이 바뀐 부분을 수정하였다.
+`user.controller.ts`에 `findUser()` 메서드와 `findAllUsers()` 메서드를 정의하였다.
+
 ### 59. 레코드 삭제
 
 ### 60. 레코드 업데이트
