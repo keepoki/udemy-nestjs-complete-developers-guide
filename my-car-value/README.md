@@ -356,9 +356,10 @@ return this.repo.find({ where: { email } });
 
 차이점은 `insert()`와 `update()`는 직접적인 SQL `INSERT` 또는 `UPDATE` 쿼리를 실행하는 것과 같다. 그렇기 때문에 후크가 없다.
 
-또한 `save()` 메서드는 엔터티를 매개변수로 받는다. `save(Entity)`
-
 ### 57. 사용자 삭제
+
+`remove()` 메서드를 사용하면 `@AfterRemove()` 후크가 호출 된다. 엔터티를 매개변수로 받는다. `remove(Entity)`
+`delete()` 메서드는 직접적인 SQL `DELETE` 쿼리를 실행하는 것과 같다. 후크가 없다.
 
 ### 58. 레코드 검색과 필터링
 
