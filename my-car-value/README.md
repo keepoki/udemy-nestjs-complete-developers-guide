@@ -347,9 +347,11 @@ return this.repo.find({ where: { email } });
 
 ![alt text](resources/56-01.png)
 
-유저 서비스의 update 함수를 작성한다.
+유저 서비스의 `update()` 메서드를 작성한다.
 
 레포지토리의 `save()` 메서드를 사용하는 것은 `insert()` 메서드와 `update()` 메서드를 합쳐놓은 기능과 같다. 중복된 데이터가 없으면 `insert()`할 것이고, 있으면 `update()` 한다.
+
+그리고 `save()` 메서드를 사용하면 후크가 있지만, 나머지는 없다.
 
 ### 57. 사용자 삭제
 
