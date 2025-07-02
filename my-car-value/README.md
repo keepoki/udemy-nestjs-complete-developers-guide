@@ -377,3 +377,7 @@ return this.repo.find({ where: { email } });
 따라서 `UpdateUserDto`를 정의하고 컨트롤러에 업데이트 로직을 추가한다.
 
 ### 61. 예외에 관한 사항
+
+Nest에서 구현된 예외 함수에 대해 배우는 시간이었다.
+
+![61-01](./resources/61-01.png)
