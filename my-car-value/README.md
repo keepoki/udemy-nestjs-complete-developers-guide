@@ -368,6 +368,8 @@ return this.repo.find({ where: { email } });
 
 ### 59. 레코드 삭제
 
+`user.controller.ts` 삭제 로직 추가
+
 ### 60. 레코드 업데이트
 
 ### 61. 예외에 관한 사항
