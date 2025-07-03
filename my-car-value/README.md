@@ -416,6 +416,47 @@ Nest에서 구현된 예외 함수에 대해 배우는 시간이었다.
 
 ### 64. 인터셉터 구현 방법
 
+인터셉터는 나가는 응답이나 들어오는 요청을 가로채는 데 사용한다.
+인터셉터를 만들 떄마다 각 라우트 핸들러에 적용할 수 있다.
+그리고 인터셉터를 전체 컨트롤러에 적용할 수도 있다.
+
+커스텀 인터셉터를 만들었다. `serialize.interceptor.ts`
+
+`users.controller.ts` 파일에서 `findUser()` 메서드에 설정된 인터셉터를 커스텀한 인터셉터로 바꿔주고, 콘솔 로그에 실행 순서를 확인하였다.
+
+```ts
+// serialize.interceptor.ts
+export class SerializeInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
+    // 요청 핸들러가 요청을 처리하기 전에 무언가를 실행합니다.
+    console.log('나는 핸들러 전에 실행됩니다.', context);
+
+    return handler.handle().pipe(
+      map((data: any) => {
+        // 응답이 발송되기 전에 무언가를 실행하십시오
+        console.log('응답이 발송되기 전에 실행 중입니다', data);
+      }),
+    );
+  }
+}
+
+// users.controller.ts
+@UseInterceptors(SerializeInterceptor)
+@Get('/:id')
+async findUser(@Param('id') id: string) {
+  console.log('핸들러가 실행 중입니다.');
+  const user = await this.usersService.findOne(parseInt(id));
+  if (!user) {
+    throw new NotFoundException('user not found');
+  }
+  return user;
+}
+```
+
+1. 핸들러가 실행 중입니다
+2. 나는 핸들러 전에 실행됩니다.
+3. 응답이 발송되기 전에 실행 중입니다.
+
 ### 65. 인터셉터 내 직렬화
 
 ### 66. 인터셉터 DTO 커스터마이즈
