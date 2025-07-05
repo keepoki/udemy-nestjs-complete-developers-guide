@@ -522,6 +522,32 @@ async findUser(@Param('id') id: string) {
 
 ### 71. 서비스 셋업 복습
 
+`유저 모듈`에 추가될 `인증 서비스`와 기존의 `컨트롤러`, `서비스`, `리포지토리`의  의존성 관계에 대해 설명하고, 인증 서비스를 추가하고 모듈 프로바이저스에 등록했다.
+
+```mermaid
+---
+config:
+  theme: 'neutral'
+---
+
+flowchart TD
+A["Users Repository"]
+B["Users Service"]
+C["Auth Service"]
+D["Users Controller"]
+
+subgraph UserModule
+  A e1@--> B
+  B e2@--> D
+  C e4@--> B
+  C e3@--> D
+end
+e1@{ animation: slow }
+e2@{ animation: slow }
+e3@{ animation: slow }
+e4@{ animation: slow }
+```
+
 ### 72. 가입하기 구현하기
 
 ### 73. (선택) 비밀번호 해시 암호화 이해하기
