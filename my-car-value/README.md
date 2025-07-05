@@ -354,7 +354,7 @@ return this.repo.find({ where: { email } });
 타입스크립트에서 지원하는 `Partial<T>` 제네릭은 모든 옵션을 선택적으로 만들어준다.
 `attrs: Partial<UserEntity>`은 `UserEntity`의 속성들을 옵셔널로 만들어 준다는 뜻이다.
 
-![alt text](resources/56-01.png)
+![56-01](resources/56-01.png)
 
 유저 서비스의 `update()` 메서드를 작성한다.
 
@@ -458,6 +458,10 @@ async findUser(@Param('id') id: string) {
 3. 응답이 발송되기 전에 실행 중입니다.
 
 ### 65. 인터셉터 내 직렬화
+
+인터셉터에서 내보낼 데이터를 구성하기 위해 `UserDto`를 설계하였다.
+따라서 유저 응답 데이터에는 패스워드는 보이지 않는다.
+![65-01](resources/65-01.png)
 
 ### 66. 인터셉터 DTO 커스터마이즈
 
