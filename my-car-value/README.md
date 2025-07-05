@@ -469,6 +469,8 @@ async findUser(@Param('id') id: string) {
 
 ### 67. 데코레이터에 인터셉터 포함하기
 
+컨트롤러에서 사용한 인터셉터 데코레이터 `@UseInterceptors(new SerializeInterceptor(UserDto))` 가 불필요하게 길어져서 데코레이터에 인터셉터를 포함하도록 리팩터링 하였다.
+
 ### 68. 컨트롤러 범위의 직렬화
 
 ### 69. 직렬화 타입 안정성
