@@ -27,8 +27,10 @@ export class AuthService {
     const result = salt + '.' + hash.toString('hex');
 
     // 새 사용자를 만들고 저장하십시오
+    const user = await this.usersService.create(email, result);
 
     // return the user
+    return user;
   }
 
   signin() {
