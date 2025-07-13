@@ -18,6 +18,9 @@ content-type: application/json
   "password": "12345"
 }
 
+### Get the currently signed in user
+GET {{host}}/auth/whoami
+
 ### Find a particular user with a given ID
 GET {{host}}/auth/3
 
