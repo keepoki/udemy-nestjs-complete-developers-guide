@@ -21,6 +21,9 @@ content-type: application/json
 ### Get the currently signed in user
 GET {{host}}/auth/whoami
 
+### Sign out
+POST {{host}}/auth/signout
+
 ### Find a particular user with a given ID
 GET {{host}}/auth/3
 

@@ -617,6 +617,10 @@ GET {{host}}/auth/colors
 
 ### 81. 사용자 로그아웃시키기
 
+`session.userId`를 `null`로 초기화 시켰지만 `WhoAmI`에서는 다른 유저의 데이터를 응답한다.
+`this.usersService.findOne(session.userId)`에서 `session.userId`가 `null`이므로 첫 번째 사용자 데이터를 가져온다.
+그래서 `findOne`메서드에 예외 처리를 추가하였다.
+
 ### 82. 자동화 도구 둘
 
 ### 83. Param 데코레이터 직접 만들기
