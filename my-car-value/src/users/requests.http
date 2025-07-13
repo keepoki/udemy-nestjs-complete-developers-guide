@@ -5,8 +5,17 @@ POST {{host}}/auth/signup
 content-type: application/json
 
 {
-  "email": "asdf@asdf332.com",
-  "password": "asdfasdf32"
+  "email": "email@test.com",
+  "password": "12345"
+}
+
+### Sing in as an existing user
+POST {{host}}/auth/signin
+content-type: application/json
+
+{
+  "email": "email@test.com",
+  "password": "12345"
 }
 
 ### Find a particular user with a given ID
