@@ -590,6 +590,22 @@ email로 유저 데이터를 찾고, 찾은 데이터에 암호화 된 패스워
 
 ### 78. 세션 데이터 변경 및 조회하기
 
+쿠키 세션 데이터를 변경하고 조회하기 위한 예시로 `color`에 대한 요청 `param`을 받아서 `session.color`에 데이터를 삽입하고, `session.color`를 조회하는 기능을 추가하였다.
+
+```http
+### Set a color
+GET {{host}}/auth/colors/red
+```
+
+![78-01](resources/78-01.png)
+
+```http
+### Get ad color
+GET {{host}}/auth/colors
+```
+
+![78-02](resources/78-02.png)
+
 ### 79. 사용자 로그인시키기
 
 ### 80. 현재 사용자 조회하기

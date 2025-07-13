@@ -1,5 +1,7 @@
+@host=http://localhost:3000
+
 ### Create a new user
-POST http://localhost:3000/auth/signup
+POST {{host}}/auth/signup
 content-type: application/json
 
 {
@@ -8,18 +10,24 @@ content-type: application/json
 }
 
 ### Find a particular user with a given ID
-GET http://localhost:3000/auth/3
+GET {{host}}/auth/3
 
 ### Find all users with a given email
-GET http://localhost:3000/auth?email=asdf@asdf2.com
+GET {{host}}/auth?email=asdf@asdf2.com
 
 ### Delete a user given id
-DELETE http://localhost:3000/auth/233
+DELETE {{host}}/auth/233
 
 ### Update a user
-PATCH http://localhost:3000/auth/3
+PATCH {{host}}/auth/3
 content-type: application/json
 
 {
   "email": "aaaaaa@aaaaa.com"
 }
+
+### Set a color
+GET {{host}}/auth/colors/red
+
+### Get ad color
+GET {{host}}/auth/colors
