@@ -6,7 +6,9 @@ import {
 
 export const CurrentUser = createParamDecorator(
   // context: 요청 핸들러
-  (data: any, context: ExecutionContext) => {
+  (data: never, context: ExecutionContext) => {
+    const request = context.switchToHttp().getRequest();
+    console.log(request.session.userId);
     return 'hi there!';
   },
 );
