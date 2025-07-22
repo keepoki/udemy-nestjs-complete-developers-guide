@@ -658,6 +658,8 @@ whoAmI(@Request() request: Request) {
 
 ### 86. CurrentUserInterceptor를 약간 수정하기
 
+`CurrentUserInterceptor`에서 `request.session`에 대한 예외 처리 추가
+
 ### 87. 인터셉터를 의존성 주입과 연결하기
 
 ### 88. 전역적인 인터셉터
