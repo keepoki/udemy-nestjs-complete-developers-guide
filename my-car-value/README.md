@@ -642,6 +642,20 @@ GET {{host}}/auth/colors
 
 ### 85. 인터셉터에서 데코레이터로 정보 전달하기
 
+이번 시간에는 인터셉터에서 데코레이터로 정보를 전달하는 기능을 작성한다.
+
+왜 인터셉터와 데코레이터를 둘 다 써야하는가?
+인터셉터만으로도 가능하겠지만, 의미가 불명확해진다.
+
+```js
+// 인터셉터만 사용하면 아래와 같이 request로 접근할 수 있다.
+// 다만 의미가 불명확하고 복잡하다.
+@Get('/whoami')
+whoAmI(@Request() request: Request) {
+  return request.currentUser;
+}
+```
+
 ### 86. CurrentUserInterceptor를 약간 수정하기
 
 ### 87. 인터셉터를 의존성 주입과 연결하기
