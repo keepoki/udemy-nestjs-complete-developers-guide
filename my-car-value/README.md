@@ -730,6 +730,8 @@ whoAmI(@Request() request: Request) {
 
 ### 92. 네, 테스트는 헷갈립니다
 
+`fakeUsersService`를 사용하여 `UsersService`를 대신하는 것은 이해했지만 테스트에서의 `AuthService`와 무슨 관계인지는 이해하기가 어렵다.
+
 ### 93. 모의 구현에 타입스크립트 이용하기
 
 ### 94. 테스트 속도 향상에 도움을 주는 간단 참고사항

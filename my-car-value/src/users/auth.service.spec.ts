@@ -12,15 +12,16 @@ it('can create an instance of auth service', async () => {
 
   const module = await Test.createTestingModule({
     providers: [
-      AuthService,
+      AuthService, // AuthService -> UsersService
       {
-        provide: UsersService,
-        useValue: fakeUsersService,
+        provide: UsersService, // UserService를 요청할 때
+        useValue: fakeUsersService, // 이 값을 사용한다는 의미이다.
       },
     ],
   }).compile();
 
   const service = module.get(AuthService);
 
+  // AuthService는 fakeUsersService를 통해 테스트한다.
   expect(service).toBeDefined();
 });
