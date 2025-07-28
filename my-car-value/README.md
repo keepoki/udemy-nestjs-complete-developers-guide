@@ -744,6 +744,8 @@ whoAmI(@Request() request: Request) {
 
 ### 95. 파일 레이아웃 개선
 
+모든 인증 테스트에서 `AuthService` 모듈의 서비스를 받아서 사용할 수 있도록 리팩터링 하였다.
+
 ### 96. 비밀번호 해시 처리
 
 ### 97. jest 변경으로 'Email in Use'테스트를 리팩터링
