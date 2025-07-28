@@ -734,6 +734,10 @@ whoAmI(@Request() request: Request) {
 
 ### 93. 모의 구현에 타입스크립트 이용하기
 
+`create()`와 `find()`를 만든 이유는 `AuthService`에서 `signup()`과 `signin()`에서 사용하기 떄문이다. 그리고 비동기 상황을 위해 `Promise`를 통해 데이터를 리턴하도록 설정하였다.
+
+`fakeUsersService`의 타입을 `Partial<UsersService>`으로 설정하여 `UsersService`의 타입 형식을 따르도록 만들었다.
+
 ### 94. 테스트 속도 향상에 도움을 주는 간단 참고사항
 
 ### 95. 파일 레이아웃 개선

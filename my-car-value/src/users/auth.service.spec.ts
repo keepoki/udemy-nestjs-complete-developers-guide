@@ -1,13 +1,14 @@
 import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
+import { UserEntity } from './user.entity';
 
 it('can create an instance of auth service', async () => {
   // 사용자 서비스의 가짜 사본을 만듭니다
-  const fakeUsersService = {
+  const fakeUsersService: Partial<UsersService> = {
     find: () => Promise.resolve([]),
     create: (email: string, password: string) =>
-      Promise.resolve({ id: 1, email, password }),
+      Promise.resolve({ id: 1, email, password } as UserEntity),
   };
 
   const module = await Test.createTestingModule({
