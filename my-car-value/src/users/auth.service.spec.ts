@@ -32,4 +32,13 @@ describe('AuthService', () => {
     // AuthService는 fakeUsersService를 통해 테스트한다.
     expect(service).toBeDefined();
   });
+
+  it('create a user with salted and hashed password', async () => {
+    const user = await service.signup('asdf@asdf.com', 'asdf');
+
+    expect(user.password).not.toEqual('asdf');
+    const [salt, hash] = user.password.split('.');
+    expect(salt).toBeDefined();
+    expect(hash).toBeDefined();
+  });
 });

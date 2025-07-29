@@ -748,6 +748,9 @@ whoAmI(@Request() request: Request) {
 
 ### 96. 비밀번호 해시 처리
 
+`AuthService` 클래스의 `signup()`메서드에 대한 내용을 테스트한다.
+새로운 유저를 추가하고, 패스워드를 `salt`와 `hash`로 나누어서 제대로 값이 있는지 확인한다.
+
 ### 97. jest 변경으로 'Email in Use'테스트를 리팩터링
 
 ### 98. 모의 구현 변경
