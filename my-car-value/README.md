@@ -753,7 +753,11 @@ whoAmI(@Request() request: Request) {
 
 ### 97. jest 변경으로 'Email in Use'테스트를 리팩터링
 
+98번 모의 구현 변경에 대한 테스트 jest 라이브러리 변경으로 수정하였다.
+
 ### 98. 모의 구현 변경
+
+`fakeUsersService`를 상위 변수로 선언하여 테스트마다 다르게 바꿔서 테스트할 수 있도록 변화를 주었다.
 
 ### 99. jest 변경으로 'Unused Email'테스트를 리팩터링
 
