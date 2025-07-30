@@ -761,7 +761,11 @@ whoAmI(@Request() request: Request) {
 
 ### 99. jest 변경으로 'Unused Email'테스트를 리팩터링
 
+100번 로그인 흐름 테스트 jest 라이브러리 변경으로 수정하였다.
+
 ### 100. 로그인 흐름 테스트
+
+`AuthService`의 `signin()` 메서드에 대한 테스트를 작성하였다.
 
 ### 101. jest 변경으로 'Invalid Password'테스트를 리팩터링
 
