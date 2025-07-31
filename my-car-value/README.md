@@ -786,6 +786,11 @@ if (storedHash !== hash.toString('hex')) {
 
 ### 103. 더욱 지능적인 모의 구현
 
+유저 목록을 저장하는 `users` 변수를 추가하고 `fakeUsersService`의 `find()`, `signup()` 메서드를 재정의 하였다.
+
+`singup`에서 새로운 유저를 `users`에 추가한다.
+`find`에서 `users`의 목록에서 인자 값 이메일과 같은 유저를 찾아서 반환한다.
+
 ### 104. jest 변경으로 Mock 3개를 리팩터링
 
 ### 105. 지능적인 모의 구현 사용을 위해 리팩터링

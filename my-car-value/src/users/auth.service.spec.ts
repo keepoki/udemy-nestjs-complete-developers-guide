@@ -10,10 +10,21 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     // 사용자 서비스의 가짜 사본을 만듭니다
+    const users: UserEntity[] = [];
     fakeUsersService = {
-      find: () => Promise.resolve([]),
-      create: (email: string, password: string) =>
-        Promise.resolve({ id: 1, email, password } as UserEntity),
+      find: (email: string) => {
+        const filterUsers = users.filter((user) => user.email === email);
+        return Promise.resolve(filterUsers);
+      },
+      create: (email: string, password: string) => {
+        const user = {
+          id: Math.floor(Math.random() * 999999),
+          email,
+          password,
+        } as UserEntity;
+        users.push(user);
+        return Promise.resolve(user);
+      },
     };
 
     const module = await Test.createTestingModule({
@@ -69,19 +80,9 @@ describe('AuthService', () => {
   });
 
   it('returns user if correct password is provided', async () => {
-    fakeUsersService.find = () =>
-      Promise.resolve([
-        {
-          email: 'asdf@asdf.com',
-          password:
-            '2bb846002e3ce07c.e778dfa28cf3a3e2faab4f2743bdca44baaf9d33d2c5ded699491c25e3ce1964',
-        } as UserEntity,
-      ]);
+    await service.signup('asdf@asdf.com', 'mypassword');
+
     const user = await service.signin('asdf@asdf.com', 'mypassword');
     expect(user).toBeDefined();
-    // 위에 테스트를 주석처리하고 아래 코드를 실행하고 로그에 찍힌 솔트와 해시로 조합된
-    // 비밀번호를 위에 테스트에 넣고 다시 테스트하면 통과는 되지만 테스트 과정이 불편하다.
-    // const user = await service.signup('asdf@asdf.com', 'mypassword');
-    // console.log(user);
   });
 });
