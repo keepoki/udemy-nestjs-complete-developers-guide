@@ -769,7 +769,20 @@ whoAmI(@Request() request: Request) {
 
 ### 101. jest 변경으로 'Invalid Password'테스트를 리팩터링
 
+102번 비밀번호 비교 확인 jest 라이브러리 변경으로 수정하였다.
+
 ### 102. 비밀번호 비교 확인
+
+첫 번째는 `AuthService`에서 `signin()` 메서드의 비밀번호가 일치 하지 않는 경우에
+대한 테스트를 추가하였다.
+
+```js
+if (storedHash !== hash.toString('hex')) {
+  throw new BadRequestException('bad password');
+}
+```
+
+두 번째는 `signin()` 메서드의 사용자 암호와 일치하면 사용자를 반환하는 테스트를 추가하였다.
 
 ### 103. 더욱 지능적인 모의 구현
 

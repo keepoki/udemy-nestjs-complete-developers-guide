@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing';
 import { AuthService } from './auth.service';
 import { UsersService } from './users.service';
 import { UserEntity } from './user.entity';
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -54,7 +54,34 @@ describe('AuthService', () => {
 
   it('throws if signin is called with an unused email', async () => {
     await expect(service.signin('asdf@asdf.com', 'asdf')).rejects.toThrow(
+      NotFoundException,
+    );
+  });
+
+  it('throws if an invalid password is provided', async () => {
+    fakeUsersService.find = () =>
+      Promise.resolve([
+        { email: 'asdf@asdf.com', password: 'qwerasdf' } as UserEntity,
+      ]);
+    await expect(service.signin('qweas@zxc.com', 'password')).rejects.toThrow(
       BadRequestException,
     );
+  });
+
+  it('returns user if correct password is provided', async () => {
+    fakeUsersService.find = () =>
+      Promise.resolve([
+        {
+          email: 'asdf@asdf.com',
+          password:
+            '2bb846002e3ce07c.e778dfa28cf3a3e2faab4f2743bdca44baaf9d33d2c5ded699491c25e3ce1964',
+        } as UserEntity,
+      ]);
+    const user = await service.signin('asdf@asdf.com', 'mypassword');
+    expect(user).toBeDefined();
+    // 위에 테스트를 주석처리하고 아래 코드를 실행하고 로그에 찍힌 솔트와 해시로 조합된
+    // 비밀번호를 위에 테스트에 넣고 다시 테스트하면 통과는 되지만 테스트 과정이 불편하다.
+    // const user = await service.signup('asdf@asdf.com', 'mypassword');
+    // console.log(user);
   });
 });
