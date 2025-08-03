@@ -801,6 +801,12 @@ if (storedHash !== hash.toString('hex')) {
 
 ### 106. 컨트롤러 단위 테스트
 
+`UsersController` 테스트를 위해 기초 필요 의존성 데이터틀을 작성하였다.
+
+`Partial` 타입을 사용하는 이유는 필요한 속성만 정의할 것이기 때문이다.
+
+> `Partial<T>`: TypeScript의 유틸리티 타입으로, 주어진 타입 `T`의 모든 속성을 `선택적(optional)`으로 만드는 타입입니다.
+
 ### 107. 추가 모의 구현
 
 ### 108. jest 변경으로 'User id is not found'테스트를 리팩터링
