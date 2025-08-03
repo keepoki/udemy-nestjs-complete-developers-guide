@@ -809,6 +809,8 @@ if (storedHash !== hash.toString('hex')) {
 
 ### 107. 추가 모의 구현
 
+`fakeUsersService`에 대한 메서드를 실제와 같은 환경으로 테스트하기 위해 일부 설정하였다. 그리고 테스트 모듈에 등록하고, 테스트 통과 결과를 확인하였다.
+
 ### 108. jest 변경으로 'User id is not found'테스트를 리팩터링
 
 ### 109. 효과가 떨어지는 테스트
