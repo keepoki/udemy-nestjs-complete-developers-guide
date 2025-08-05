@@ -822,3 +822,5 @@ if (storedHash !== hash.toString('hex')) {
 컨트롤러는 최대한 단순해야 한다. 유저 컨트롤러 메서드 `findAllUsers`, `findUser`를 테스트로 추가하였다.
 
 ### 110. signin 메서드 테스트
+
+유저 컨트롤러 메서드 `createUser`, `signin` 테스트를 추가하였다.
