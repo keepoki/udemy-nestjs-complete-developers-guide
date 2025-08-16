@@ -851,6 +851,28 @@ auth에 대한 e2e 테스트 파일을 만들고 `signup`에 대한 테스트를
 
 ### 113. spec 파일에서의 앱 설정 문제
 
+e2e 테스트 현재 설정 상태로는 쿠키 세션과 유효성 파이프라인을 거치지 않고 있다.
+실제 서비스 환경에서는 이 두가지를, `main.ts` 파일의 `bootstrap` 함수에서 설정한 것이 확인된다.
+
+`setup-app.ts`이라는 파일을 추가해서 쿠키 세션과 유효성 파이프라인을 설정하는 것을 옮겨서 사용하는 방법도 있다는 것을 보여주었다.
+
+```ts
+export const setupApp = (app: any) => {
+  app.use(
+    cookieSession({
+      keys: ['cookie'],
+    }),
+  );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
+}
+```
+
+실제로 적용하지는 않고, NestJs에서 공식으로 다루는 방식을 적용할 예정이다.
+
 ### 114. 전역 범위 파이프 적용
 
 ### 115. 전역 범위 미들웨어 적용
