@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
 const cookieSession = require('cookie-session');
 
 async function bootstrap() {
@@ -8,11 +7,6 @@ async function bootstrap() {
   app.use(
     cookieSession({
       keys: ['cookie'], // 암호화에 사용되는 값
-    }),
-  );
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
     }),
   );
   await app.listen(process.env.PORT ?? 3000);
