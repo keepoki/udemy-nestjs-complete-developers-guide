@@ -1,4 +1,4 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { MiddlewareConsumer, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { UserEntity } from './users/user.entity';
 import { ReportEntity } from './reports/reports.entity';
+const cookieSession = require('cookie-session');
 
 @Module({
   imports: [
@@ -30,4 +31,12 @@ import { ReportEntity } from './reports/reports.entity';
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(
+      cookieSession({
+        keys: ['cookie'], // 암호화에 사용되는 값
+      }),
+    ).forRoutes('*');
+  }
+}
