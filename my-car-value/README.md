@@ -938,8 +938,14 @@ Dotenv 라리브러리 개발자들은 버전 관리를 위한 파일을 커밋�
 `.env` 테스트, 개발 각각 하나씩 추가
 `app.module.ts` 파일에서 `ConfigModule` 추가하여 전역으로 설정하고, env 파일 경로를 지정한다.
 `TypeOrmModule.forRootAsync`에 `ConfigService`를 의존성 주입한다.
+깃 제외 파일(`.gitignore`)에 `.env.development`, `.env.test` 파일 추가
 
 ### 120. 런타임 환경 지정하기
+
+다중 운영체제 지원 환경 변수 라이브러리 `cross-env` 설치
+실행 환경마다 환경 변수를 다르게 설정하기 위해 `package.json` 파일을 수정
+
+e2e 테스트를 하면 데이터베이스가 잠겼다는 오류가 발생하는데, 정상이다 이후에 해결 하기로 한다.
 
 ### 121. SQLite 오류 해결하기
 
