@@ -935,6 +935,10 @@ Dotenv 라리브러리 개발자들은 버전 관리를 위한 파일을 커밋�
 
 ### 119. Config에서 Dotenv 적용하기
 
+`.env` 테스트, 개발 각각 하나씩 추가
+`app.module.ts` 파일에서 `ConfigModule` 추가하여 전역으로 설정하고, env 파일 경로를 지정한다.
+`TypeOrmModule.forRootAsync`에 `ConfigService`를 의존성 주입한다.
+
 ### 120. 런타임 환경 지정하기
 
 ### 121. SQLite 오류 해결하기
