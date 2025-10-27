@@ -1022,6 +1022,11 @@ Jest는 여러 테스트를 동시에 실행하려 해서 DB 동시 접근 문�
 
 ### 132. ManyToOne 및 OneToMany 데코레이터
 
+`userEntity` 클래스에 `reports` 속성을 추가해 `OneToMany` 데코레이터를 설정하였다.
+`reportEntity` 클래스에 `user` 속성을 추하개 `ManyToOne` 데코레이터를 설정하였다.
+
+`OneToMany` 데코레이터는 DB 테이블 속성을 변경시키지 않는다. `ManyToOne` 데코레이터는 DB 테이블 속성을 변경시킨다.
+
 ### 133. 중요사항 데이터베이스 삭제 관련 참고사항
 
 ### 134. 데코레이터에 대한 추가 정보
