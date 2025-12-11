@@ -168,7 +168,8 @@ import { ReportsModule } from './reports/reports.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({ // TypeORM 설정
+    TypeOrmModule.forRoot({
+      // TypeORM 설정
       type: 'sqlite',
       database: 'db.sqlite',
       entities: [],
@@ -220,7 +221,7 @@ import { UserEntity } from './user.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEntity])], // forFeature메서드를 사용하여 엔터티를 등록한다.
   controllers: [UsersController],
-  providers: [UsersService]
+  providers: [UsersService],
 })
 export class UsersModule {}
 ```
@@ -576,7 +577,7 @@ async findUser(@Param('id') id: string) {
 
 ### 71. 서비스 셋업 복습
 
-`유저 모듈`에 추가될 `인증 서비스`와 기존의 `컨트롤러`, `서비스`, `리포지토리`의  의존성 관계에 대해 설명하고, 인증 서비스를 추가하고 모듈 프로바이저스에 등록했다.
+`유저 모듈`에 추가될 `인증 서비스`와 기존의 `컨트롤러`, `서비스`, `리포지토리`의 의존성 관계에 대해 설명하고, 인증 서비스를 추가하고 모듈 프로바이저스에 등록했다.
 
 ```mermaid
 ---
@@ -747,7 +748,7 @@ whoAmI(@Request() request: Request) {
 
 `AuthService`를 만들고 가짜 `UsersService`를 사용해 인증 서비스 인스턴스를 만들 예정이다.
 
-> 단위 테스트: 애플리케이션의 가장 작은 독립적인 코드 단위를 테스트하는 것을 말한다.  여기서 "단위"는 함수, 메서드, 클래스 등 개별적인 기능을 수행하는 부분을 의미한다. 단위 테스트의 주된 목적은 각 단위가 의도한 대로 정확하게 작동하는지 확인하는 데 있다.
+> 단위 테스트: 애플리케이션의 가장 작은 독립적인 코드 단위를 테스트하는 것을 말한다. 여기서 "단위"는 함수, 메서드, 클래스 등 개별적인 기능을 수행하는 부분을 의미한다. 단위 테스트의 주된 목적은 각 단위가 의도한 대로 정확하게 작동하는지 확인하는 데 있다.
 >
 > 통합 테스트: 여러 단위 또는 모듈들이 서로 연동하여 올바르게 작동하는지 확인하는 테스트이다. 단위 테스트에서 개별 구성 요소가 잘 작동하는 것을 확인했다면, 통합 테스트에서는 이 구성 요소들이 함께 작동할 때 발생하는 문제를 찾는 데 중점을 둔다.
 
@@ -892,7 +893,7 @@ export const setupApp = (app: any) => {
       whitelist: true,
     }),
   );
-}
+};
 ```
 
 실제로 적용하지는 않고, NestJs에서 공식으로 다루는 방식을 적용할 예정이다.
@@ -1051,5 +1052,8 @@ Report 테이블에 UserId 속성을 추가하게 된다.
 ![alt text](resources/135-01.png)
 
 ### 136. 보고서 응답 서식 지정하기
+
+현재는 사용자의 비밀번호 속성까지 포함되어 있는데, Serialize를 이용하여 공유되는 정보의 양을 제한하여 이를 방지할 예정이다.
+유저의 정보도 전체를 보여줄 필요 없이, userId만 보여주어 포인트 처럼 사용하기도 한다.
 
 ### 137. DTO로 속성 변환하기
