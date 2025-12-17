@@ -1049,7 +1049,7 @@ Report 테이블에 UserId 속성을 추가하게 된다.
 
 현재 유저 데이터는 로그인한 유저의 데이터이므로, 유저로 로그인하고 리포트를 생성하는 요청으로 테스트하면 된다.
 
-![alt text](resources/135-01.png)
+![db_table](resources/135-01.png)
 
 ### 136. 보고서 응답 서식 지정하기
 
@@ -1057,3 +1057,10 @@ Report 테이블에 UserId 속성을 추가하게 된다.
 유저의 정보도 전체를 보여줄 필요 없이, userId만 보여주어 포인트 처럼 사용하기도 한다.
 
 ### 137. DTO로 속성 변환하기
+
+리포트 dto를 생성하고 Transform 데코레이터를 사용하여 userId 속성에 접근할 수 있도록 설정하였다.
+Expose 데코레이터를 사용하여 userId 속성을 공개한다.
+
+controllter에 Serialize 데코레이터를 사용하여 dto를 직렬화하였다.
+
+![create_report](resources/137-01.png)
