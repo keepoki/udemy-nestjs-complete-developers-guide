@@ -1091,6 +1091,14 @@ controllter에 Serialize 데코레이터를 사용하여 dto를 직렬화하였�
 
 ### 139. changeApproval() 메서드에 필요한 업데이트
 
+0.3.0 TypeORM 버전에 큰 변경사항이 있어서 changeApproval() 메서드를 수정해야 한다.
+
+```ts
+async changeApproval(id: string, approved: boolean) {
+   const report = await this.repo.findOne({ where: { id: parseInt(id) } });
+};
+```
+
 ### 140. 보고서 승인 테스트하기
 
 ### 141. 인가와 인증
