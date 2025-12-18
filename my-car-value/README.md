@@ -1101,6 +1101,8 @@ async changeApproval(id: string, approved: boolean) {
 
 ### 140. 보고서 승인 테스트하기
 
+보고서 승인 상태를 바꾸기 위해 `changeArpproval` 메서드를 추가하였다.
+
 ### 141. 인가와 인증
 
 ### 142. 인가 가드 추가하기

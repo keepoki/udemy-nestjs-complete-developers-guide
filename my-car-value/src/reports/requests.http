@@ -13,3 +13,12 @@ content-type: application/json
   "lat": 0,
   "price": 500000
 }
+
+
+### Approve an existing report
+PATCH {{host}}/reports/1
+content-type: application/json
+
+{
+  "approved": true
+}
