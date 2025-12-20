@@ -1105,6 +1105,12 @@ async changeApproval(id: string, approved: boolean) {
 
 ### 141. 인가와 인증
 
+인증은 애플리케이션에 요청을 실행한 사람이 누구인지 확인하는 것이다.
+인가는 앱 안에서 특정 사용자가 특정 작업을 수행할 권한이 있는지 확인하는 것이다.
+
+이미 만든 AuthGuard와 유사하게 AdminGuard를 만들 예정이다.
+PATCH /reports/:id -> AdminGuard -> Route Handler
+
 ### 142. 인가 가드 추가하기
 
 ### 143. 가드에 발생하는 오류
