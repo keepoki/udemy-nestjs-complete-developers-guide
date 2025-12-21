@@ -1113,6 +1113,8 @@ PATCH /reports/:id -> AdminGuard -> Route Handler
 
 ### 142. 인가 가드 추가하기
 
+user 엔터티에 `admin` boolean 속성을 추가하고, `adminGaurd` 클래스를 추가하였다.
+
 ### 143. 가드에 발생하는 오류
 
 ### 144. 미들웨어, 가드, 인터셉터
