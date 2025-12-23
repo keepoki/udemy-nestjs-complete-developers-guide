@@ -1117,6 +1117,8 @@ user 엔터티에 `admin` boolean 속성을 추가하고, `adminGaurd` 클래스
 
 ### 143. 가드에 발생하는 오류
 
+reprots.controller에 `@UseGuards(AdminGuard)`를 추가하고 테스트한 결과 에러가 발생한다.
+
 ### 144. 미들웨어, 가드, 인터셉터
 
 ### 145. 미들웨어로 CrruentUser 할당하기

@@ -16,7 +16,7 @@ content-type: application/json
 
 
 ### Approve an existing report
-PATCH {{host}}/reports/1
+PATCH {{host}}/reports/ 3
 content-type: application/json
 
 {
