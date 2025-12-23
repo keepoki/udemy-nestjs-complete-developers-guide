@@ -119,7 +119,7 @@
   - [142. 인가 가드 추가하기](#142-인가-가드-추가하기)
   - [143. 가드에 발생하는 오류](#143-가드에-발생하는-오류)
   - [144. 미들웨어, 가드, 인터셉터](#144-미들웨어-가드-인터셉터)
-  - [145. 미들웨어로 CrruentUser 할당하기](#145-미들웨어로-crruentuser-할당하기)
+  - [145. 미들웨어로 CurrentUser 할당하기](#145-미들웨어로-currentuser-할당하기)
   - [146. 타입 정의 오류 수정하기](#146-타입-정의-오류-수정하기)
   - [147. 쿼리 문자열 값 검증하기](#147-쿼리-문자열-값-검증하기)
   - [148. 쿼리 문자열 데이터 변환하기](#148-쿼리-문자열-데이터-변환하기)
@@ -1117,11 +1117,19 @@ user 엔터티에 `admin` boolean 속성을 추가하고, `adminGaurd` 클래스
 
 ### 143. 가드에 발생하는 오류
 
-reprots.controller에 `@UseGuards(AdminGuard)`를 추가하고 테스트한 결과 에러가 발생한다.
+reprots.controller에 `@UseGuards(AdminGuard)`를 추가하고 보고서 수정 요청을 테스트한 결과 에러가 발생한다.
 
 ### 144. 미들웨어, 가드, 인터셉터
 
-### 145. 미들웨어로 CrruentUser 할당하기
+현재 파이프라인은 아래와 같이 진행되고 있다.
+
+Request -> Cookie-Session Middleware -> AdminGuard -> Request Handler -> Response
+CurrentUser Interceptor -> Request Handler, CurrentUser Interceptor -> Response
+
+따라서 AdminGuard에서 접근하고 있는 `currentUser` 속성은 `undefined`가 된다.
+그렇기 때문에 CurrentUser Interceptor를 AdminGuard보다 앞에 미들웨어로 추가해야한다.
+
+### 145. 미들웨어로 CurrentUser 할당하기
 
 ### 146. 타입 정의 오류 수정하기
 
