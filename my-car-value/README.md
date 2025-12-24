@@ -1101,7 +1101,7 @@ async changeApproval(id: string, approved: boolean) {
 
 ### 140. 보고서 승인 테스트하기
 
-보고서 승인 상태를 바꾸기 위해 `changeArpproval` 메서드를 추가하였다.
+보고서 승인 상태를 바꾸기 위해 `changeApproval` 메서드를 추가하였다.
 
 ### 141. 인가와 인증
 
@@ -1113,11 +1113,11 @@ PATCH /reports/:id -> AdminGuard -> Route Handler
 
 ### 142. 인가 가드 추가하기
 
-user 엔터티에 `admin` boolean 속성을 추가하고, `adminGaurd` 클래스를 추가하였다.
+user 엔터티에 `admin` boolean 속성을 추가하고, `adminGuard` 클래스를 추가하였다.
 
 ### 143. 가드에 발생하는 오류
 
-reprots.controller에 `@UseGuards(AdminGuard)`를 추가하고 보고서 수정 요청을 테스트한 결과 에러가 발생한다.
+reports.controller에 `@UseGuards(AdminGuard)`를 추가하고 보고서 수정 요청을 테스트한 결과 에러가 발생한다.
 
 ### 144. 미들웨어, 가드, 인터셉터
 
