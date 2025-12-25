@@ -1140,6 +1140,9 @@ CurrentUser Interceptor -> Request Handler, CurrentUser Interceptor -> Response
 
 ### 147. 쿼리 문자열 값 검증하기
 
+쿼리 문자열을 검증하기 위해 `GetEstimateDto`를 생성하였다.
+DTO에서 타입을 지정해주었지만, 쿼리 문자열이 자동 형변환이 일어나지 않아 검증에 실패한다.
+
 ### 148. 쿼리 문자열 데이터 변환하기
 
 ### 149. 견적을 생성하는 방법
