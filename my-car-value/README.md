@@ -1136,6 +1136,8 @@ CurrentUser Interceptor -> Request Handler, CurrentUser Interceptor -> Response
 
 ### 146. 타입 정의 오류 수정하기
 
+`CurrentUserMiddleware`에서 `currentUser` 속성을 `UserEntity`로 설정하였다.
+
 ### 147. 쿼리 문자열 값 검증하기
 
 ### 148. 쿼리 문자열 데이터 변환하기
