@@ -1131,6 +1131,9 @@ CurrentUser Interceptor -> Request Handler, CurrentUser Interceptor -> Response
 
 ### 145. 미들웨어로 CurrentUser 할당하기
 
+1. `CurrentUserMiddleware`를 생성하였다.
+2. 유저 모듈에 미들웨어를 적용하고 등록된 인터셉터를 삭제하였다.
+
 ### 146. 타입 정의 오류 수정하기
 
 ### 147. 쿼리 문자열 값 검증하기
